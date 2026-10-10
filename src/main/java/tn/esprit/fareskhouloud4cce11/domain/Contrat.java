@@ -27,7 +27,7 @@ public class Contrat {
 
     private boolean valide;
 
-    // Association Contrat -> Paiement
+
     @OneToMany(
             mappedBy = "contrat",
             cascade = CascadeType.ALL,
@@ -37,7 +37,7 @@ public class Contrat {
     @Builder.Default
     private List<Paiement> paiements = new ArrayList<>();
 
-    // Association Contrat -> Reservation
+
     @OneToOne(fetch = FetchType.LAZY)
     private Reservation reservation;
 }

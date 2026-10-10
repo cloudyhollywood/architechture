@@ -1,9 +1,6 @@
 package tn.esprit.fareskhouloud4cce11.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -13,14 +10,34 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"client", "vehicule", "contrat"})
 @Entity
-
 public class Reservation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReservation;
+
     private LocalDate dateDebut;
+
     private LocalDate dateFin;
+
+    @Enumerated(EnumType.STRING)
     private StatutReservation statut;
+
+    // Association Reservation -> Client
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Client client;
+
+    // Association Reservation -> Vehicule
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Vehicule vehicule;
+
+    // Association Reservation <-> Contrat
+    @OneToOne(
+            mappedBy = "reservation",
+            cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+    )
+    private Contrat contrat;
 }

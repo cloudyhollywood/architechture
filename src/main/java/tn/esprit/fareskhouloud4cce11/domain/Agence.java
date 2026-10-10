@@ -1,25 +1,42 @@
 package tn.esprit.fareskhouloud4cce11.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"vehicules", "employes"})
 @Entity
-
 public class Agence {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAgence;
+
     private String nom;
     private String ville;
     private String adresse;
     private String telephone;
+
+    // Association Agence -> Vehicule
+    @OneToMany(
+            mappedBy = "agence",
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private List<Vehicule> vehicules = new ArrayList<>();
+
+    // Association Agence -> Employe
+    @OneToMany(
+            mappedBy = "agence",
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private List<Employe> employes = new ArrayList<>();
 }

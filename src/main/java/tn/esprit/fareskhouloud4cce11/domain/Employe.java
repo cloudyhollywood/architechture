@@ -8,15 +8,22 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = "agence")
 @Entity
-
 public class Employe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmploye;
+
     private String nom;
+
     private String prenom;
+
     @Enumerated(EnumType.STRING)
     private RoleEmploye role;
+
+    // Association Employe -> Agence
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Agence agence;
 }

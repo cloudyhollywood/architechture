@@ -1,25 +1,43 @@
 package tn.esprit.fareskhouloud4cce11.domain;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString
+@ToString(exclude = {"paiements", "reservation"})
 @Entity
 public class Contrat {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idContrat;
+
     private LocalDate dateSignature;
+
     private BigDecimal montantTotal;
+
     private boolean valide;
+
+    // Association Contrat -> Paiement
+    @OneToMany(
+            mappedBy = "contrat",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true,
+            fetch = FetchType.LAZY
+    )
+    @Builder.Default
+    private List<Paiement> paiements = new ArrayList<>();
+
+    // Association Contrat -> Reservation
+    @OneToOne(fetch = FetchType.LAZY)
+    private Reservation reservation;
 }

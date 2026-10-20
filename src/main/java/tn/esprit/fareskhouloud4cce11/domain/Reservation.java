@@ -2,6 +2,7 @@ package tn.esprit.fareskhouloud4cce11.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.time.LocalDate;
 
@@ -34,6 +35,7 @@ public class Reservation {
     private Vehicule vehicule;
 
     // Association Reservation <-> Contrat
+    @JsonIgnore
     @OneToOne(
             mappedBy = "reservation",
             cascade = CascadeType.ALL,

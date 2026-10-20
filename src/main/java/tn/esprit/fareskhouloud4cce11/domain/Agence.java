@@ -2,6 +2,7 @@ package tn.esprit.fareskhouloud4cce11.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,18 +26,14 @@ public class Agence {
     private String telephone;
 
     // Association Agence -> Vehicule
-    @OneToMany(
-            mappedBy = "agence",
-            fetch = FetchType.LAZY
-    )
+    @JsonIgnore
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Vehicule> vehicules = new ArrayList<>();
 
     // Association Agence -> Employe
-    @OneToMany(
-            mappedBy = "agence",
-            fetch = FetchType.LAZY
-    )
+    @JsonIgnore
+    @OneToMany(mappedBy = "agence", fetch = FetchType.LAZY)
     @Builder.Default
     private List<Employe> employes = new ArrayList<>();
 }

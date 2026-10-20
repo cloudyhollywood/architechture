@@ -2,6 +2,7 @@ package tn.esprit.fareskhouloud4cce11.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,7 +28,7 @@ public class Contrat {
 
     private boolean valide;
 
-
+    @JsonIgnore
     @OneToMany(
             mappedBy = "contrat",
             cascade = CascadeType.ALL,

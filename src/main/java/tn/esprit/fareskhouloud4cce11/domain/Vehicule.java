@@ -2,6 +2,7 @@ package tn.esprit.fareskhouloud4cce11.domain;
 
 import jakarta.persistence.*;
 import lombok.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -43,6 +44,7 @@ public class Vehicule {
 
 
     // 2. Association Vehicule <-> Equipement
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "vehicule_equipement",
@@ -54,6 +56,7 @@ public class Vehicule {
 
 
     // 3. Association Vehicule -> Reservation
+    @JsonIgnore
     @OneToMany(
             mappedBy = "vehicule",
             fetch = FetchType.LAZY
@@ -63,6 +66,7 @@ public class Vehicule {
 
 
     // 4. Association Vehicule -> Maintenance
+    @JsonIgnore
     @OneToMany(
             mappedBy = "vehicule",
             cascade = CascadeType.PERSIST,
